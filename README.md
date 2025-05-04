@@ -1,64 +1,111 @@
-# Minishell Overview
+# Minishell
 
-Objective: Create a simplified bash shell with specific functionalities.
+## Description
 
-Functionalities: Command prompt display, command history, executables handling, quote recognition, redirections, pipes, environment variables, signal handling, and a set of built-in commands.
+This project aims to create a simple shell, similar to `bash` or `zsh`, as part of the 42 curriculum. It involves parsing user input, handling commands, managing processes, and implementing various shell features like pipes, redirections, and environment variable expansion.
 
-#### To see how commands are executed in bash
-bash -x -c 'cat minishell.h | grep ");"$'
+## Features
 
-#### Valgrind Supression Command
+*   Command execution (with arguments)
+*   Path handling (`PATH` variable)
+*   Environment variable expansion (`$VAR`) and management (`export`, `unset`, `env`)
+*   Input/Output redirection (`<`, `>`, `>>`)
+*   Here Documents (`<<`)
+*   Pipes (`|`)
+*   Built-in commands (`cd`, `echo`, `pwd`, `export`, `unset`, `env`, `exit`)
+*   Signal handling (e.g., `Ctrl-C`, `Ctrl-D`, `Ctrl-\`)
 
-valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=readline.supp ./minishell
+## Installation Instructions
 
-## Pseudo Code Structure
-### Initialization
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/axellee1994/minishell.git](https://github.com/axellee1994/minishell.git)
+    cd minishell
+    ```
+2.  **Compile the project:**
+    ```bash
+    make
+    ```
+    *Requires `libreadline-dev` (or system equivalent).*
+    ```bash
+    sudo apt-get update && sudo apt-get install libreadline-dev
+    ```
 
-- [x] Set up the environment (e.g., copy environment variables).
-- [x] Initialize signal handling for ctrl-C (SIGINT) and ctrl-D (EOF).
-- [x] Main Loop
-- [x] Display a prompt.
-- [x] Read input from the user.
-- [x] If input is empty or only spaces, continue to the next iteration.
-- [x] Add input to history.
-- [x] Check and handle input errors.
-- [x] Parse and route the command.
-- [x]Clear up command list for next input.
-- [x] Repeat unless an exit condition is met (e.g., "exit" command or ctrl-D).
+## Usage Instructions
 
-### Command Parsing and Execution
+1.  **Run the shell:**
+    ```bash
+    ./minishell
+    ```
+2.  **Examples:**
+    *   **Basic commands:**
+        ```bash
+        ls -l
+        pwd
+        echo "Hello, Minishell!"
+        ```
+    *   **Environment variables:**
+        ```bash
+        export MY_VAR="test"
+        echo $MY_VAR
+        env | grep MY_VAR
+        unset MY_VAR
+        ```
+    *   **Navigation:**
+        ```bash
+        cd ..
+        cd /tmp
+        ```
+    *   **Output Redirection:**
+        ```bash
+        ls > file_list.txt          # Overwrite
+        echo "Add this line" >> file_list.txt # Append
+        ```
+    *   **Input Redirection:**
+        ```bash
+        sort < file_list.txt        # Assumes 'sort' is executable via PATH
+        ```
+    *   **Pipes:**
+        ```bash
+        cat Makefile | grep FLAGS
+        ls -l | wc -l
+        ```
+    *   **Here Document:**
+        ```bash
+        cat << END
+        This is line 1.
+        This is line 2 with $USER variable.
+        END
+        ```
+    *   **Combined:**
+        ```bash
+        grep ^a < /etc/passwd | sort > sorted_a_users.txt
+        ```
+    *   **Exiting:**
+        ```bash
+        exit
+        ```
 
-- [x] Lexer (Tokenizer): Breaks down input into tokens (words or symbols).
-- [x] Parser: Groups tokens into commands and their arguments, identifying redirections, pipes, and built-in commands.
-- [x] Executor: Executes the commands based on parsed data.
-- [x]For built-in commands (like cd, exit), execute directly in the shell.
-- [x] For external commands, find the executable and run it, handling input/output redirection and piping as needed.
-- [x]Built-in Commands Handling
+## Contribution Guidelines
 
-Identify if the first word of a command is a built-in command.
-If so, execute the corresponding function directly within the shell.
+We welcome contributions! Please follow these steps:
+1.  Fork the repository.
+2.  Create a new branch for your feature or bug fix (`git checkout -b feature/your-feature-name`).
+3.  Make your changes, adhering to the 42 Norm coding style.
+4.  Ensure your code compiles (`make`) and functions as expected.
+5.  Commit your changes (`git commit -am 'Add some feature'`).
+6.  Push to the branch (`git push origin feature/your-feature-name`).
+7.  Create a new Pull Request.
 
-### Redirections and Pipes
+Please ensure your pull request description clearly explains the changes and the problem they solve.
 
-- [x] Handle input (<), output (>), append (>>), and heredoc (<<) redirections by adjusting file descriptors.
-- [x] Use pipes (|) to connect the output of one command to the input of another.
+## License Information
 
-### Environment Variables and Exit Status
+This project is licensed under the [Specify License - e.g., MIT License]. See the `LICENSE` file for details (if applicable).
 
-- [x] Replace $VARIABLE with its value.
-- [x] Replace $? with the last command's exit status.
-- [x] Signal Handling
+## Contact Information
 
-- [x] Ensure ctrl-C, ctrl-D, and ctrl-\ are handled similarly to bash.
-- [x] Reset and Cleanup
+*   **Author(s):** axellee1994 - [https://github.com/axellee1994](https://github.com/axellee1994)
+*   **Project Link:** [https://github.com/axellee1994/minishell](https://github.com/axellee1994/minishell)
 
-After each command execution or on exit, free allocated resources and prepare for the next input or shutdown.
-
-**Simplified Explanation**
-
-The minishell starts by setting up its environment and handling signals.
-It then enters a loop where it displays a prompt, awaits user input, and processes that input.
-Input processing involves breaking the input into parts (lexer), organizing these parts into commands and their parameters (parser), and then executing these commands (executor).
-Special handling is provided for built-in commands, redirections, pipes, and environment variables.
-The shell also handles signals (like ctrl-C) in a manner similar to bash.
-After executing the commands, the shell cleans up any used resources and is ready for the next input or to exit if instructed.
+For any inquiries or issues, please open an issue on the GitHub repository.
