@@ -109,4 +109,4 @@ This project is licensed under the [Specify License - e.g., MIT License]. See th
 *   **Project Link:** [https://github.com/axellee1994/minishell](https://github.com/axellee1994/minishell)
 ---
 
-Thank you for using and contributing to **webserv**! If you find this project helpful, please consider starring the repository or submitting improvements.
+Thank you for using and contributing to **minishell**! If you find this project helpful, please consider starring the repository or submitting improvements.
